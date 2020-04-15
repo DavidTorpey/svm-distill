@@ -1,0 +1,43 @@
+<!doctype html>
+<meta charset="utf-8">
+<script src="https://distill.pub/template.v1.js"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+<script type="text/front-matter">
+  title: "An Intution for the Support Vector Machine"
+  description: "Description of the post"
+  authors:
+  - David Torpey: https://davidtorpey.com
+  affiliations:
+  - Jaguar Land Rover Ireland: https://www.jaguarlandrovercareers.com/content/Ireland/?locale=en_GB
+</script>
+
+<dt-article>
+  <h1>An Intuition for the Support Vector Machine</h1>
+  <h2>The support vector machine (SVM) is a widely-used machine learning algorithm. However, </h2>
+  <dt-byline></dt-byline>
+  <p>Kernel methods are very useful pattern recognition algorithms, and still see wide use in practise. The most popular kernel method is known as the support vector machine (SVM).</p>
+  <p>The goal of an SVM, as with all classification algorithms, is to find a mapping \(f : \mathcal{X} \rightarrow \mathcal{Y}\) using a training dataset \(S \subset \mathcal{X} \times \mathcal{Y}\), where \(S = X \times Y\) for some \(X \subset \mathcal{X}\) and \(Y \subset \mathcal{Y}\). In this work, we will focus on a binary classification context: \(\mathcal{Y} = \{+1, -1\}\), and a simple 2D real vector space as our feature space: \(\mathcal{X} = \mathbb{R}^2\).</p>
+  <p>The estimation of \(f\) using the SVM optimisation algorithm can be done in various ways. We will cover the following concepts of the SVM framework: soft-margin, hard-margin, and the kernel trick. All of them, however, have the same overarching goal - compute an optimal separating hyperplane. Optimality of the hyperplane in the context of an SVM is that the hyperplane is defined to be the <b>maximum-margin</b> separating hyperplane. This makes intuitive sense, since a decision boundary that is far away from the classes as possible seems as if it would perform best in terms of generalisation performance.</p>
+  <p>The goal of the work is to develop an intuition about the various components of the SVM, when to use the various flavours, and why they do or do not work.</p>
+  <p>Recall that the dual formulation of the <b>hard-margin</b> SVM optimisation problem is given as: $$\min_{\alpha} \frac{1}{2} \sum_i \sum_j y_i y_j \alpha_i \alpha_j x_i^T x_j - \sum_i \alpha_i$$ subject to $$\alpha_i \ge 0, \sum_i y_i \alpha_i = 0 \text{  } \forall i$$</p>
+  <p>Finally, to classify a novel example \(x_t\), we compute the following decision rule: $$f(x_t) = \text{sign}(\sum_i y_i \alpha_i x_i^T x_t)$$</p>
+  <p>It is clear from this decision rule that we require an \(\alpha_i\) for <b>every sample in the dataset</b>. However, in reality it is often the case that \(\alpha_i = 0\) for most samples in the dataset, except for a few points. The points where \(\alpha_i \neq 0\) are known as the <b>support vectors</b>. We will denote the set of support vectors for an SVM as \(\mathcal{P}\).</p>
+  <p><i>In this way, the support vectors completely define our decision boundary.</i> Futher, it is clear that we need a <i>minimum</i> of 2 support vectors to compute the hyperplane for an SVM binary classification task.</p>
+  <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
+</dt-article>
+
+<dt-appendix>
+</dt-appendix>
+
+<script type="text/bibliography">
+  @article{gregor2015draw,
+    title={DRAW: A recurrent neural network for image generation},
+    author={Gregor, Karol and Danihelka, Ivo and Graves, Alex and Rezende, Danilo Jimenez and Wierstra, Daan},
+    journal={arXivreprint arXiv:1502.04623},
+    year={2015},
+    url={https://arxiv.org/pdf/1502.04623.pdf}
+  }
+</script>
