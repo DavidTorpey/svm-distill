@@ -24,9 +24,13 @@
   <p>The goal of the work is to develop an intuition about the various components of the SVM, when to use the various flavours, and why they do or do not work.</p>
   <p>Recall that the dual formulation of the <b>hard-margin</b> SVM optimisation problem is given as: $$\min_{\alpha} \frac{1}{2} \sum_i \sum_j y_i y_j \alpha_i \alpha_j x_i^T x_j - \sum_i \alpha_i$$ subject to $$\alpha_i \ge 0, \sum_i y_i \alpha_i = 0 \text{  } \forall i$$</p>
   <p>Finally, to classify a novel example \(x_t\), we compute the following decision rule: $$f(x_t) = \text{sign}(\sum_i y_i \alpha_i x_i^T x_t)$$</p>
-  <p>It is clear from this decision rule that we require an \(\alpha_i\) for <b>every sample in the dataset</b>. However, in reality it is often the case that \(\alpha_i = 0\) for most samples in the dataset, except for a few points. The points where \(\alpha_i \neq 0\) are known as the <b>support vectors</b>. We will denote the set of support vectors for an SVM as \(\mathcal{P}\).</p>
+  <p>It is clear from this decision rule that we require an \(\alpha_i\) for <b>every sample in the dataset</b>. However, in reality it is often the case that \(\alpha_i = 0\) for most samples in the dataset, except for a few points. The points where \(\alpha_i \neq 0\) are known as the <b>support vectors</b>. We will denote the set of support vectors for an SVM as \(P\).</p>
   <p><i>In this way, the support vectors completely define our decision boundary.</i> Futher, it is clear that we need a <i>minimum</i> of 2 support vectors to compute the hyperplane for an SVM binary classification task.</p>
   <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
+  <p><img src="hm_linear.png"></p>
+  <p>In the above image, we see that see that the 2 classes are well-separated, and are thus linearly separable. Therefore, a hard-margin SVM can be easily learned for this dataset. Additionally, only 2 support vectors are needed to define the decision boundary (depicted with yellow boundaries).</p>
+  <p><img src="hm_linear_lns.png"></p>
+  <p>When the data are linearly nonseparable, a hard-margin linear SVM cannot find a hyperplane. This results in a poor decision boundary, as depicted above. Further, in its attempt to find the hyperplane when the data is linearly nonseparable, all points become support vectors: \(P = X\). This is a good indicator that something has gone wrong during the optimisation of an SVM.</p>
 </dt-article>
 
 <dt-appendix>
