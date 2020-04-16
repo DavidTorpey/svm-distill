@@ -201,8 +201,9 @@
      are not perfectly separable, it seems we are done. However, this is still 
      not sufficient for the SVM to be able to model a variety of real-world 
      problems. The main disadvantage with the soft-margin formulation as 
-     derived above is that it still assumes the data is linearly separable. It 
-     assumes a hyperplane (with some misclassification leeway) is sufficient to 
+     derived above is that it still assumes the data is linearly separable. 
+     This is why this formulation is known as the <i>linear</i> SVM. 
+     It assumes a hyperplane (with some misclassification leeway) is sufficient to 
      separate the classes adequately. This assumption often does not hold, as 
      most real-world data is non-linear. A technique, known as the 
      <b>kernel trick</b> is a way of allowing the SVM is model linearly
@@ -217,7 +218,19 @@
     it should be a Mercer kernel. Interestingly, if \(k\) is not a Mercer kernel, the SVM 
     optimisation problem is no longer convex. Secondly, the kernel should be able to be 
     written as a feature map \(\phi : \mathcal{X} \rightarrow \mathcal{V}\) such that:
-    $$k(x_i, x_j) = \langle \phi(x_i), \phi(x_i) \rangle$$  
+    $$k(x_i, x_j) = \langle \phi(x_i), \phi(x_i) \rangle$$
+  </p>
+
+  <p>
+    Now, recall the (without loss of generality) the objective function for the 
+    dual formulation for a soft-margin linear SVM:
+    $$\frac{1}{2} \alpha_i \alpha_i y_i y_j x_i \cdot x_j - \sum_i \alpha_i$$
+    Note that the first term of this objective function - and thus the whole optimisation 
+    problem for the SVM, depends <b>only</b> on dot products between the input vectors. 
+    This is where the kernel trick comes into play. We can replace these dot products with 
+    the corresponding kernel values using \(k(x_i, x_j)\), since the kernel is defined
+    (from above) to return exactly the dot product of a transformed version of the input 
+    vectors. The key is that this transformation is necessarily non-linear.
   </p>
   
   <!-- EXPERIMENTS -->
