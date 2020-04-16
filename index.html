@@ -120,8 +120,8 @@
 
   <p>
     This optimisation problem is the perfect candidate for Langrange multipliers, and is 
-    is known as the <b>primal</b> formulation of the SVM. The classification rule for 
-    the primal is \(f(x) = \text{sign}(w \cdot x + b)\).
+    is known as the <b>primal</b> formulation of the SVM. It is a classic quadratic programming
+    problem. The classification rule for the primal is \(f(x) = \text{sign}(w \cdot x + b)\).
     We formulate the Lagrangian:
     $$\mathcal{L}(w, b) = \frac{1}{2} ||w||^2 - \sum_i \alpha_i [y_i (w \cdot x_i + b) - 1]$$
     Taking the derivative with respect to the hyperplane slope \(w\), we yield:
@@ -148,7 +148,7 @@
     This dual formulation has the following classification rule: 
     \(f(x) = \sum_i \alpha_i y_i x_i \cdot x + b\). The equivalent condition within the 
     dual formulation for support vectors is \(\alpha_i \neq 0\). Fortunately, for most 
-    problem we only have few support vectors (i.e. \(\alpha_i = 0\) for most samples 
+    problems we only have few support vectors (i.e. \(\alpha_i = 0\) for most samples 
     in the dataset). An important note on support vectors is that, generally, the smaller
     the ratio \(\frac{|P|}{|S|}\), the better the generalisation performance. In other words, 
     the fewer support vectors with respect to the number of samples in the training set, 
@@ -172,12 +172,26 @@
      variant. The main disadvantage of the hard-margin SVM is its strong 
      assumption of perfect separation of the classes being possible. This is 
      often not the case in practise. As such, soft-margin SVMs introduce so-called 
-     <i>slack variables</i>. The slack variables essentially allow the 
-     SVM some leeway in its where the data points must be relative to the margin
-     The amount of misclassification introduced with the slack variables is 
-     controlled through the use of a hyperparameter \(C \in \mathbb{R}\). This 
-     parameter can be interpreted as the effective number of misclassifications 
-     we permit the SVM to make. 
+     <i>slack variables</i> to accommodate for this. The slack variables essentially 
+     allow the SVM some leeway in its where the data points must be relative to the 
+     margin. Formally, the primal formulation of the soft-margin variant of the SVM 
+     is given by:
+     $$\min_{w, b, \xi_i} \frac{1}{2} ||w||^2 + C \sum_i \xi_i$$
+     subject to 
+     $$y_i (w \cdot x_i + b) \ge 1 - \xi_i$$
+     where \(\xi_i\) are the slack variables, and \(C \in \mathbb{R}\). It is clear 
+     from the constraint how the leeway is introduced into the optimisation problem. 
+     The constraint is less stringent by allowing for a slack of \(\xi_i\) units for 
+     where point \(x_i\) lies with respect to the hyperplane.
+   </p>
+
+   <p>
+     The dual equivalent within the soft-margin setting is given by:
+     $$\min_{\alpha_i} \frac{1}{2} \sum_i \sum_j \alpha_i \alpha_j y_i y_j x_i \cdot x_j - \sum_i \alpha_i$$
+     subject to 
+     $$0 \le \alpha_i \le C, \sum_i \alpha_i y_i = 0$$
+     Clearly, we can introduce the leeway within the primal without having to solve for 
+     the additional parameters in the form of the slack variables \(\xi_i\).
    </p>
 
    <p>
@@ -190,6 +204,8 @@
   <!-- EXPERIMENTS -->
   <h2>Experiments</h2>
   http://www.robots.ox.ac.uk/~az/lectures/ml/lect3.pdf
+
+  https://cel.archives-ouvertes.fr/cel-01003007/file/Lecture3_Linear_SVM_with_Slack.pdf
 </dt-article>
 <dt-appendix>
 </dt-appendix>
