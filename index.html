@@ -120,7 +120,9 @@
 
   <p>
     This optimisation problem is the perfect candidate for Langrange multipliers, and is 
-    is known as the <b>primal</b> formulation of the SVM. We formulate the Lagrangian:
+    is known as the <b>primal</b> formulation of the SVM. The classification rule for 
+    the primal is \(f(x) = \text{sign}(w \cdot x + b)\).
+    We formulate the Lagrangian:
     $$\mathcal{L}(w, b) = \frac{1}{2} ||w||^2 - \sum_i \alpha_i [y_i (w \cdot x_i + b) - 1]$$
     Taking the derivative with respect to the hyperplane slope \(w\), we yield:
     $$\frac{\partial \mathcal{L}}{\partial w} = w - \sum_i \alpha_i y_i x_i = 0$$
@@ -129,55 +131,42 @@
   </p>
 
   <p>
-    We can stop here and solve for the parameters. However, it is useful to convert the 
+    We can stop here and solve for the two parameters. However, it is useful to convert the 
     above primal formulation into its <i>dual</i> counterpart. This is because sometimes 
     it is more efficient to solve the one than the other. Formally, we are solving for 
-    \(d\) parameters in the primal, and \(N\) in the dual. Thus, typically if \(N << d\), 
-    it is generally more efficient to solve the dual than the primal.
+    \(d\) parameters in the primal, and for \(N\) in the dual. Thus, typically if 
+    \(N << d\), it is generally more efficient to solve the dual than the primal.
   </p>
 
   <p>
-    To construct the primal, we plug the equations obtained by taking the partial 
+    To construct the dual, we plug the equations obtained by taking the partial 
     derivatives with respect to \(w\) and \(b\) back into the Lagrangian. The yields 
     (after some algebra) the following:
     $$\mathcal{L}(\alpha_i) = \sum_i \alpha_i - \frac{1}{2} \sum_i \sum_j \alpha_i \alpha_j y_i y_j x_i \cdot x_j$$
     subject to 
     $$\alpha_i \ge 0, \sum_i \alpha_i y_i = 0$$
-  </p>
-
-  <!-- HARD MARGIN -->
-  <h2>Hard-Margin</h2>
-  <p>
-    Recall that the dual formulation of the <b>hard-margin</b> SVM 
-    optimisation problem is given as: $$\min_{\alpha} \frac{1}{2} \sum_i \sum_j
-    y_i y_j \alpha_i \alpha_j x_i^T x_j - \sum_i \alpha_i$$ subject to
-    $$\alpha_i \ge 0, \sum_i y_i \alpha_i = 0 \text{ } \forall i$$
-  </p>
-
-  <p>
-    Then, to classify a novel example \(x_t\), we compute the following 
-    decision rule: $$f(x_t) = \text{sign}(\sum_i y_i \alpha_i x_i^T x_t)$$
+    This dual formulation has the following classification rule: 
+    \(f(x) = \sum_i \alpha_i y_i x_i \cdot x + b\). The equivalent condition within the 
+    dual formulation for support vectors is \(\alpha_i \neq 0\). Fortunately, for most 
+    problem we only have few support vectors (i.e. \(\alpha_i = 0\) for most samples 
+    in the dataset). An important note on support vectors is that, generally, the smaller
+    the ratio \(\frac{|P|}{|S|}\), the better the generalisation performance. In other words, 
+    the fewer support vectors with respect to the number of samples in the training set, 
+    the better. This makes intuitive sense, since if the SVM can construct a hyperplane 
+    with few samples, it is confident about the class labels about the majority of the 
+    training examples.
   </p>
 
   <p>
-    It is clear from this decision rule that we require an \(\alpha_i\) for 
-    <b>every sample in the dataset</b>. However, in reality it is often the 
-    case that \(\alpha_i = 0\) for most samples in the dataset, except for a 
-    few points. The points where \(\alpha_i \neq 0\) are known as the 
-    <b>support vectors</b>. We will denote the set of support vectors for an 
-    SVM as \(P\).
-  </p>
-
-  <p>
-    <i>In this way, the support vectors completely define our decision 
-    boundary.</i> Futher, it is clear that we need a <i>minimum</i> of 2 
-    support vectors to compute the hyperplane for an SVM binary 
-    classification task. In general, we will need a minimum of the number 
-    of classes of support vectors to learn the maximum-margin hyperplanes.
+    The above formulations of both the primal and dual are known as the <b>hard-margin</b> 
+    SVM. This is important since the assumption being made is that the classes are 
+    linearly separable. This strong assumption of perfect separation often does not hold 
+    in practise, and there are ways of to accommodate for this. These will be discussed 
+    in the next section.
   </p>
 
   <!-- SOFT MARGIN -->
-  <h2>Soft-Margin</h2>
+  <h2>The Soft Margin</h2>
    <p>
      The <b>soft-margin</b> SVM is a natural extension of the soft-margin 
      variant. The main disadvantage of the hard-margin SVM is its strong 
