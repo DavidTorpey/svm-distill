@@ -192,11 +192,12 @@
     is given by:
     $$\min_{\mathbf{w}, b, \xi_i} \frac{1}{2} ||\mathbf{w}||^2 + C \sum_i \xi_i$$
     subject to 
-    $$y_i (\mathbf{w} \cdot \mathbf{x}_i + b) \ge 1 - \xi_i$$
-    where \(\xi_i\) are the slack variables, and \(C \in \mathbb{R}\). It is clear 
-    from the constraint how the leeway is introduced into the optimisation problem. 
-    The constraint is less stringent by allowing for a slack of \(\xi_i\) units for 
-    where point \(\mathbf{x}_i\) lies with respect to the hyperplane.
+    $$y_i (\mathbf{w} \cdot \mathbf{x}_i + b) \ge 1 - \xi_i, \xi_i \ge 0$$
+    where \(\xi_i = \max(0, 1 - y_i (\mathbf{w} \cdot \mathbf{x}_i + b))\) are 
+    the slack variables, and \(C \in \mathbb{R}\). It is clear from the constraint 
+    how the leeway is introduced into the optimisation problem. The constraint is 
+    less stringent by allowing for a slack of \(\xi_i\) units for where point 
+    \(\mathbf{x}_i\) lies with respect to the hyperplane.
   </p>
 
    <p>
@@ -364,7 +365,8 @@
     we have a more sensible non-linear decision boundary. Further, \(\eta\) takes on a 
     lower value of \(0.59\). Importantly, this is lower than the soft-margin linear SVM 
     which had \(\eta = 0.8\). This is good empirical evidence that the data is non-linear, 
-    since it is best modelled using a non-linear SVM.
+    since it is best modelled using a non-linear SVM. It also suggests that this kernelized 
+    SVM will have better generalisation performance.
   </p>
 
   http://www.robots.ox.ac.uk/~az/lectures/ml/lect3.pdf
