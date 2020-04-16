@@ -72,15 +72,15 @@
   <p>
     The goal of an SVM is to construct a maximum-margin separating hyperplane 
     between the classes. To do this, consider a vector \(w\) that a perpendicular 
-    to the margin, and a novel point \(x\), which is the data point we want to 
-    classify. First, we project \(x\) onto \(w\): \(w \cdot x\). Since \(w\) is 
-    normal to the hyperplane, this projection is also normal to it. Thus, we can 
-    classify \(x\) as a positive example if it is far <i>enough</i> away from the 
-    hyperplane, which we can formalise with the following decision rule:
-    $$w \cdot x \ge c$$
+    to the margin, and a novel point \(\mathbf{x}\), which is the data point we want to 
+    classify. First, we project \(\mathbf{x}\) onto \(\mathbf{w}\): \(\mathbf{w} \cdot \mathbf{x}\). 
+    Since \(\mathbf{w}\) is normal to the hyperplane, this projection is also normal to it. 
+    Thus, we can  classify \(\mathbf{x}\) as a positive example if it is far <i>enough</i> away 
+    from the hyperplane, which we can formalise with the following decision rule:
+    $$\mathbf{w} \cdot \mathbf{x} \ge c$$
     for some \(c \in \mathbb{R}\). We rewrite this decision rule as the following 
     for convenience:
-    $$w \cdot x + b \ge 0$$
+    $$\mathbf{w} \cdot \mathbf{x} + b \ge 0$$
     with \(b = -c\).
   </p>
 
@@ -89,16 +89,16 @@
     this current formulation, <b>any</b> separating hyperplane will satisfy the 
     condition. Thus, we need to introduce additional constraint into the problem in 
     order to find the maximum-margin hyperplane (not just any hyperplane). To do this, 
-    we introduce the following constraints. For positive examples \(x_+\):
-    $$w \cdot x_+ + b \ge 1$$
-    and for negative examples \(x_-\):
-    $$w \cdot x_- + b \le -1$$
+    we introduce the following constraints. For positive examples \(\mathbf{x}_+\):
+    $$\mathbf{w} \cdot \mathbf{x}_+ + b \ge 1$$
+    and for negative examples \(\mathbf{x}_-\):
+    $$\mathbf{w} \cdot \mathbf{x}_- + b \le -1$$
     We can condense these 2 constraints into a single constraint using the targets 
     associated with the input samples, since they are encoded as either \(+1\) or 
     \(-1\). <i>This is the reason the binary targets for an SVM are encoded as 
     \(\{+1, -1\}\), instead of \(\{0, 1\}\) or some other encoding.</i>. The single 
     constraint, which holds for both positive and negative examples, is defined as:
-    $$y_i (w \cdot x_i + b) \ge 1$$.
+    $$y_i (\mathbf{w} \cdot \mathbf{x}_i + b) \ge 1$$.
   </p>
 
   <p><img src="geom_2.png"></p>
@@ -107,37 +107,37 @@
     Since the SVM learns a maximum-margin, we must find an expression for the width 
     of the margin. From the figure, we see that the width can be computed using the 
     following:
-    $$(x_+ - x_-) \cdot \frac{w}{||w||}$$
-    It should be noted that \(x_+\) and \(x_-\) in the above expression are support 
+    $$(\mathbf{x}_+ - \mathbf{x}_-) \cdot \frac{\mathbf{w}}{||\mathbf{w}||}$$
+    It should be noted that \(\mathbf{x}_+\) and \(\mathbf{x}_-\) in the above expression are support 
     vectors. Support vectors are those vectors which lie exactly on the margin 
-    (i.e. \(y_i (w \cdot x + b) -  1 = 0\)). These vectors fully define the hyperplane. 
+    (i.e. \(y_i (\mathbf{w} \cdot \mathbf{x} + b) -  1 = 0\)). These vectors fully define the hyperplane. 
     We will denote the set of support vectors for a given SVM as \(P\). Using this 
     definition of support vectors, simple algebra yields the following expression for 
     the margin width:
-    $$\frac{2}{||w||}$$
+    $$\frac{2}{||\mathbf{w}||}$$
   </p>
 
   <p>
     Since we want to maximise the margin, we need to solve the following optimisation 
     problem:
-    $$\max_{w, b} \frac{2}{||w||}$$
+    $$\max_{\mathbf{w}, b} \frac{2}{||\mathbf{w}||}$$
     subject to 
-    $$y_i (w \cdot x_i + b) \ge 1$$
+    $$y_i (\mathbf{w} \cdot \mathbf{x}_i + b) \ge 1$$
     This is mathematically equivalent to the following:
-    $$\min_{w, b} \frac{1}{2} ||w||^2$$
+    $$\min_{\mathbf{w}, b} \frac{1}{2} ||\mathbf{w}||^2$$
     subject to 
-    $$y_i (w \cdot x_i + b) \ge 1$$
+    $$y_i (\mathbf{w} \cdot \mathbf{x}_i + b) \ge 1$$
   </p>
 
   <p>
     This optimisation problem is the perfect candidate for Langrange multipliers, and is 
     is known as the <b>primal</b> formulation of the SVM. It is a classic quadratic programming
-    problem. The classification rule for the primal is \(f(x) = \text{sign}(w \cdot x + b)\).
+    problem. The classification rule for the primal is \(f(\mathbf{x}) = \text{sign}(\mathbf{w} \cdot \mathbf{x} + b)\).
     We formulate the Lagrangian:
-    $$\mathcal{L}(w, b) = \frac{1}{2} ||w||^2 - \sum_i \alpha_i [y_i (w \cdot x_i + b) - 1]$$
-    Taking the derivative with respect to the hyperplane slope \(w\), we yield:
-    $$\frac{\partial \mathcal{L}}{\partial w} = w - \sum_i \alpha_i y_i x_i = 0$$
-    Solving for \(w\) yields: \(w = \sum_i \alpha_i y_i x_i\). The equivalent equation 
+    $$\mathcal{L}(\mathbf{w}, b) = \frac{1}{2} ||\mathbf{w}||^2 - \sum_i \alpha_i [y_i (\mathbf{w} \cdot \mathbf{x}_i + b) - 1]$$
+    Taking the derivative with respect to the hyperplane slope \(\mathbf{w}\), we yield:
+    $$\frac{\partial \mathcal{L}}{\partial \mathbf{w}} = w - \sum_i \alpha_i y_i \mathbf{x}_i = 0$$
+    Solving for \(\mathbf{w}\) yields: \(\mathbf{w} = \sum_i \alpha_i y_i \mathbf{x}_i\). The equivalent equation 
     for the intercept parameter \(b\) is: \(\sum_i \alpha_i y_i = 0\).
   </p>
 
@@ -151,13 +151,13 @@
 
   <p>
     To construct the dual, we plug the equations obtained by taking the partial 
-    derivatives with respect to \(w\) and \(b\) back into the Lagrangian. The yields 
+    derivatives with respect to \(\mathbf{w}\) and \(b\) back into the Lagrangian. The yields 
     (after some algebra) the following:
-    $$\mathcal{L}(\alpha_i) = \sum_i \alpha_i - \frac{1}{2} \sum_i \sum_j \alpha_i \alpha_j y_i y_j x_i \cdot x_j$$
+    $$\mathcal{L}(\alpha_i) = \sum_i \alpha_i - \frac{1}{2} \sum_i \sum_j \alpha_i \alpha_j y_i y_j \mathbf{x}_i \cdot \mathbf{x}_j$$
     subject to 
     $$\alpha_i \ge 0, \sum_i \alpha_i y_i = 0$$
     This dual formulation has the following classification rule: 
-    \(f(x) = \sum_i \alpha_i y_i x_i \cdot x + b\). The equivalent condition within the 
+    \(f(\mathbf{x}) = \sum_i \alpha_i y_i \mathbf{x}_i \cdot \mathbf{x} + b\). The equivalent condition within the 
     dual formulation for support vectors is \(\alpha_i \neq 0\). Fortunately, for most 
     problems we only have few support vectors (i.e. \(\alpha_i = 0\) for most samples 
     in the dataset). An important note on support vectors is that, generally, the smaller
@@ -190,18 +190,18 @@
     allow the SVM some leeway in its where the data points must be relative to the 
     margin. Formally, the primal formulation of the soft-margin variant of the SVM 
     is given by:
-    $$\min_{w, b, \xi_i} \frac{1}{2} ||w||^2 + C \sum_i \xi_i$$
+    $$\min_{\mathbf{w}, b, \xi_i} \frac{1}{2} ||\mathbf{w}||^2 + C \sum_i \xi_i$$
     subject to 
-    $$y_i (w \cdot x_i + b) \ge 1 - \xi_i$$
+    $$y_i (\mathbf{w} \cdot \mathbf{x}_i + b) \ge 1 - \xi_i$$
     where \(\xi_i\) are the slack variables, and \(C \in \mathbb{R}\). It is clear 
     from the constraint how the leeway is introduced into the optimisation problem. 
     The constraint is less stringent by allowing for a slack of \(\xi_i\) units for 
-    where point \(x_i\) lies with respect to the hyperplane.
+    where point \(\mathbf{x}_i\) lies with respect to the hyperplane.
   </p>
 
    <p>
      The dual equivalent within the soft-margin setting is given by:
-     $$\min_{\alpha_i} \frac{1}{2} \sum_i \sum_j \alpha_i \alpha_j y_i y_j x_i \cdot x_j - \sum_i \alpha_i$$
+     $$\min_{\alpha_i} \frac{1}{2} \sum_i \sum_j \alpha_i \alpha_j y_i y_j \mathbf{x}_i \cdot \mathbf{x}_j - \sum_i \alpha_i$$
      subject to 
      $$0 \le \alpha_i \le C, \sum_i \alpha_i y_i = 0$$
      Clearly, we can introduce the leeway within the primal without having to solve for 
@@ -230,24 +230,24 @@
     it should be a Mercer kernel. Interestingly, if \(k\) is not a Mercer kernel, the SVM 
     optimisation problem is no longer convex. Secondly, the kernel should be able to be 
     written as a feature map \(\phi : \mathcal{X} \rightarrow \mathcal{V}\) such that:
-    $$k(x_i, x_j) = \langle \phi(x_i), \phi(x_i) \rangle$$
+    $$k(\mathbf{x}_i, \mathbf{x}_j) = \langle \phi(\mathbf{x}_i), \phi(\mathbf{x}_i) \rangle$$
   </p>
 
   <p>
     Now, recall the (without loss of generality) the objective function for the 
     dual formulation for a soft-margin linear SVM:
-    $$\frac{1}{2} \alpha_i \alpha_i y_i y_j x_i \cdot x_j - \sum_i \alpha_i$$
+    $$\frac{1}{2} \alpha_i \alpha_i y_i y_j \mathbf{x}_i \cdot \mathbf{x}_j - \sum_i \alpha_i$$
     Note that the first term of this objective function - and thus the whole optimisation 
     problem for the SVM, depends <b>only</b> on dot products between the input vectors. 
     This is where the kernel trick comes into play. We can replace these dot products with 
-    the corresponding kernel values using \(k(x_i, x_j)\), since the kernel is defined
+    the corresponding kernel values using \(k(\mathbf{x}_i, \mathbf{x}_j)\), since the kernel is defined
     (from above) to return exactly the dot product of a transformed version of the input 
     vectors. The key is that this transformation is necessarily non-linear. This is what 
     equips the SVM with the ability to model non-linear data. The make the following 
     small change to the objective function:
-    $$\frac{1}{2} \alpha_i \alpha_i y_i y_j k(x_i, x_j) - \sum_i \alpha_i$$
-    and the decision rule changes similarly to: \(f(x) = \sum_i \alpha_i y_i k(x_i, x)\). 
-    This means that the solution to the dual now depends on \(k(x_i, x_j)\) for all 
+    $$\frac{1}{2} \alpha_i \alpha_i y_i y_j k(\mathbf{x}_i, \mathbf{x}_j) - \sum_i \alpha_i$$
+    and the decision rule changes similarly to: \(f(\mathbf{x}) = \sum_i \alpha_i y_i k(\mathbf{x}_i, \mathbf{x})\). 
+    This means that the solution to the dual now depends on \(k(\mathbf{x}_i, \mathbf{x}_j)\) for all 
     \(i, j\). This is known as the Gram (or kernel) matrix. However, this introduce a 
     bottleneck. If \(n := |S|\) is too large, then it becomes infeasible to compute an 
     \(n \times n\) Gram matrix. In such situations, it becomes more efficient to solve 
@@ -276,7 +276,9 @@
     $$\eta := \frac{|P|}{|S|} \in [\frac{|Y|}{|S|}, 1]$$
     This serves as an important metric in our analyses. The above range for \(\eta\) 
     holds for any generic finite set of classes \(\mathcal{Y}\). In our binary 
-    classification case, we have that \(\eta \in [\frac{2}{|S|}, 1]\).
+    classification case, we have that \(\eta \in [\frac{2}{|S|}, 1]\). Typically, the 
+    lower \(\eta\) is, the better generalisation performance will be. Of course there 
+    are cases where this does not hold, but it is a good rule-of-thumb.
   </p>
 
   <p><img src="hm_linear_ls.png"></p>
@@ -284,18 +286,61 @@
   <p>
     In the above figure we run a hard-margin linear SVM on a dataset that is 
     linearly separable. In such a setting, the hyperplane can be completely defined 
-    by only two support vectors (highlighted in yellow). In this case we have that:
-    $$\eta = $$
+    by only two support vectors (highlighted in yellow). In this case we have that 
+    \(\eta\) takes on its minimum value (\(0.02\) in this case).
   </p>
 
   <p><img src="hm_linear_lns.png"></p>
 
+  <p>
+    In the above figure, we run the same hard-margin linear SVM on a dataset with 
+    linearly non-separable classes. In this case, the SVM is not defined (the 
+    optimisation will not converge since the assumption of perfect separation 
+    is broken). However, the implementation used forces converges. From the figure, 
+    we get an idea of how such an SVM behaves in this scenario. The separating 
+    hyperplane found seems to be a poor choice, from just visual inspection. Further, 
+    \(\eta\) takes on its maximum possible value of \(1\). This is a strong sign 
+    that something has gone wrong with the SVM optimisation, or that a reliable 
+    hyperplane is simply not learnable for this particular dataset and SVM flavour. 
+  </p>
+
   <p><img src="sm_linear_lns.png"></p>
+
+  <p>
+    In order to learn a more sane hyperplane, we again run a linear SVM, but 
+    the soft-margin variant. This will allow some leeway for misclassification 
+    in the effort of finding a sane and reliable hyperplane. From visual inspection, 
+    the hyperplane found seems to fit the data better, given its distribution. Further, 
+    (\eta\) has decreased to \(0.8\), which means fewer data points are used as support 
+    vectors to define the hyperplane. This is promising, however, this is still a 
+    very high value for \(\eta\). 
+  </p>
 
   <p><img src="hm_nonlinear_lns.png"></p>
 
+  <p>
+    As such, we introduce a kernel into the modelling process. We choose the radial 
+    basis function (RBF) kernel for all experiments. However, we first show the case 
+    of using a kernel with a hard-margin SVM, as seen in the figure above. We have a 
+    similar problem to the hard-margin linear SVM. \(\eta\) again takes on its 
+    maximum possible value of \(1\), since all data points are used as support vectors. 
+    What this essentially means is that even in the projected feature space, the 
+    classes are still not perfectly separable with a hyperplane. Further, the decision 
+    boundary is now non-linear, which is what we expect when using a non-linear kernel 
+    function such as the RBF kernel.
+  </p>
+
   <p><img src="sm_nonlinear_lns.png"></p>
-  
+
+  <p>
+    Finally, we train an RBF soft-margin SVM on the same data. This is the type of 
+    SVM that is typically used in practise, as it is the most flexible. We can see that 
+    we have a more sensible non-linear decision boundary. Further, \(\eta\) takes on a 
+    lower value of \(0.59\). Importantly, this is lower than the soft-margin linear SVM 
+    which had \(\eta = 0.8\). This is good empirical evidence that the data is non-linear, 
+    since it is best modelled using a non-linear SVM.
+  </p>
+
   http://www.robots.ox.ac.uk/~az/lectures/ml/lect3.pdf
 
   https://cel.archives-ouvertes.fr/cel-01003007/file/Lecture3_Linear_SVM_with_Slack.pdf
