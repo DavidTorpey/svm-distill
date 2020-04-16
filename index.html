@@ -155,7 +155,7 @@
 
   <p>
     The above formulations of both the primal and dual are known as the <b>hard-margin</b> 
-    SVM. This is important since the assumption being made is that the classes  
+    SVM. This is important since the assumption being made is that the classes   
     can be separated perfectly using a hyperplane. This strong assumption of perfect 
     separation often does not hold in practise, and there are ways of to accommodate 
     for this. These will be discussed in the next section.
@@ -241,6 +241,19 @@
   
   <!-- EXPERIMENTS -->
   <h2>Experiments</h2>
+
+  <p>
+    The goal of the following experiments is to develop an intuition of what to tweak, 
+    and when to tweak. We will show the various failure modes that can be encountered, 
+    why they occur, and how to mitigate them.
+  </p>
+
+  <p>
+    The experimental setup is as follows. For demonstration purposes, only consider 
+    binary classification, and feature vectors in 2D real vector space. Formally, 
+    \(\mathcal{Y} = \{+1, -1\}\), and \(\mathcal{X} = \mathbb{R}^2\). Additionally, 
+    we only use synthetic, toy data that we generate to show the various concepts.
+  </p>
 
   <p><img src="hm_linear.png"></p>
 
