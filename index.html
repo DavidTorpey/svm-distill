@@ -1,8 +1,7 @@
 <!doctype html>
 <meta charset="utf-8">
 <script src="https://distill.pub/template.v1.js"></script>
-<script type="text/javascript" id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 </script>
 
 <script type="text/front-matter">
@@ -16,23 +15,193 @@
 
 <dt-article>
   <h1>An Intuition for the Support Vector Machine</h1>
-  <h2>The support vector machine (SVM) is a widely-used machine learning algorithm. However, </h2>
+  <h2>The support vector machine (SVM) is a widely-used machine learning algorithm. However, it has many components that
+    interact in complex ways. This article serves to collate these various components, develop an intuition about them,
+    and explain them in a rigorous and approachable way.</h2>
   <dt-byline></dt-byline>
-  <p>Kernel methods are very useful pattern recognition algorithms, and still see wide use in practise. The most popular kernel method is known as the support vector machine (SVM).</p>
-  <p>The goal of an SVM, as with all classification algorithms, is to find a mapping \(f : \mathcal{X} \rightarrow \mathcal{Y}\) using a training dataset \(S \subset \mathcal{X} \times \mathcal{Y}\), where \(S = X \times Y\) for some \(X \subset \mathcal{X}\) and \(Y \subset \mathcal{Y}\). In this work, we will focus on a binary classification context: \(\mathcal{Y} = \{+1, -1\}\), and a simple 2D real vector space as our feature space: \(\mathcal{X} = \mathbb{R}^2\).</p>
-  <p>The estimation of \(f\) using the SVM optimisation algorithm can be done in various ways. We will cover the following concepts of the SVM framework: soft-margin, hard-margin, and the kernel trick. All of them, however, have the same overarching goal - compute an optimal separating hyperplane. Optimality of the hyperplane in the context of an SVM is that the hyperplane is defined to be the <b>maximum-margin</b> separating hyperplane. This makes intuitive sense, since a decision boundary that is far away from the classes as possible seems as if it would perform best in terms of generalisation performance.</p>
-  <p>The goal of the work is to develop an intuition about the various components of the SVM, when to use the various flavours, and why they do or do not work.</p>
-  <p>Recall that the dual formulation of the <b>hard-margin</b> SVM optimisation problem is given as: $$\min_{\alpha} \frac{1}{2} \sum_i \sum_j y_i y_j \alpha_i \alpha_j x_i^T x_j - \sum_i \alpha_i$$ subject to $$\alpha_i \ge 0, \sum_i y_i \alpha_i = 0 \text{  } \forall i$$</p>
-  <p>Finally, to classify a novel example \(x_t\), we compute the following decision rule: $$f(x_t) = \text{sign}(\sum_i y_i \alpha_i x_i^T x_t)$$</p>
-  <p>It is clear from this decision rule that we require an \(\alpha_i\) for <b>every sample in the dataset</b>. However, in reality it is often the case that \(\alpha_i = 0\) for most samples in the dataset, except for a few points. The points where \(\alpha_i \neq 0\) are known as the <b>support vectors</b>. We will denote the set of support vectors for an SVM as \(P\).</p>
-  <p><i>In this way, the support vectors completely define our decision boundary.</i> Futher, it is clear that we need a <i>minimum</i> of 2 support vectors to compute the hyperplane for an SVM binary classification task.</p>
-  <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
-  <p><img src="hm_linear.png"></p>
-  <p>In the above image, we see that see that the 2 classes are well-separated, and are thus linearly separable. Therefore, a hard-margin SVM can be easily learned for this dataset. Additionally, only 2 support vectors are needed to define the decision boundary (depicted with yellow boundaries).</p>
-  <p><img src="hm_linear_lns.png"></p>
-  <p>When the data are linearly nonseparable, a hard-margin linear SVM cannot find a hyperplane. This results in a poor decision boundary, as depicted above. Further, in its attempt to find the hyperplane when the data is linearly nonseparable, all points become support vectors: \(P = X\). This is a good indicator that something has gone wrong during the optimisation of an SVM.</p>
-</dt-article>
 
+  <!-- INTRODUCTION -->
+  <h2>Introduction</h2>
+
+  <p>Kernel methods are very useful pattern recognition algorithms, and still see wide use in practise. The most popular
+    kernel method is known as the support vector machine (SVM).</p>
+
+  <p>The goal of an SVM, as with all classification algorithms, is to find a mapping \(f : \mathcal{X} \rightarrow
+    \mathcal{Y}\) using a training dataset \(S \subset \mathcal{X} \times \mathcal{Y}\), where \(S = X \times Y\) for
+    some \(X \subset \mathcal{X}\) and \(Y \subset \mathcal{Y}\). In this work, we will focus on a binary classification
+    context: \(\mathcal{Y} = \{+1, -1\}\), and a simple 2D real vector space as our feature space: \(\mathcal{X} =
+    \mathbb{R}^2\).</p>
+
+  <p>The estimation of \(f\) using the SVM optimisation algorithm can be done in various ways. We will cover the
+    following concepts of the SVM framework: soft-margin, hard-margin, and the kernel trick. All of them, however, have
+    the same overarching goal - compute an optimal separating hyperplane. Optimality of the hyperplane in the context of
+    an SVM is that the hyperplane is defined to be the <b>maximum-margin</b> separating hyperplane. This makes intuitive
+    sense, since a decision boundary that is far away from the classes as possible seems as if it would perform best in
+    terms of generalisation performance.</p>
+
+  <p>The goal of the work is to develop an intuition about the various components of the SVM, when to use the various
+    flavours, and why they do or do not work.</p>
+
+  <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
+
+  <p><img src="hm_linear.png"></p>
+
+  <p>In the above image, we see that see that the 2 classes are well-separated, and are thus linearly separable.
+    Therefore, a hard-margin SVM can be easily learned for this dataset. Additionally, only 2 support vectors are needed
+    to define the decision boundary (depicted with yellow boundaries).</p>
+
+  <p><img src="hm_linear_lns.png"></p>
+
+  <p>
+    When the data are linearly nonseparable, a hard-margin linear SVM cannot find a hyperplane. This results in a poor
+    decision boundary, as depicted above. Further, in its attempt to find the hyperplane when the data is linearly
+    nonseparable, all points become support vectors: \(P = X\). This is a good indicator that something has gone wrong
+    during the optimisation of an SVM.
+  </p>
+
+  <h2>The Support Vector Machine - A Geometric Derivation</h2>
+  <p>
+    The goal of an SVM is to construct a maximum-margin separating hyperplane 
+    between the classes. To do this, consider a vector \(w\) that a perpendicular 
+    to the margin, and a novel point \(x\), which is the data point we want to 
+    classify. First, we project \(x\) onto \(w\): \(w \cdot x\). Since \(w\) is 
+    normal to the hyperplane, this projection is also normal to it. Thus, we can 
+    classify \(x\) as a positive example if it is far <i>enough</i> away from the 
+    hyperplane, which we can formalise with the following decision rule:
+    $$w \cdot x \ge c$$
+    for some \(c \in \mathbb{R}\). We rewrite this decision rule as the following 
+    for convenience:
+    $$w \cdot x + b \ge 0$$
+    with \(b = -c\).
+  </p>
+
+  <p>
+    It is important to note that the above decision rule is not stringent enough. In 
+    this current formulation, <b>any</b> separating hyperplane will satisfy the 
+    condition. Thus, we need to introduce additional constraint into the problem in 
+    order to find the maximum-margin hyperplane (not just any hyperplane). To do this, 
+    we introduce the following constraints. For positive examples \(x_+\):
+    $$w \cdot x_+ + b \ge 1$$
+    and for negative examples \(x_-\):
+    $$w \cdot x_- + b \le -1$$
+    We can condense these 2 constraints into a single constraint using the targets 
+    associated with the input samples, since they are encoded as either \(+1\) or 
+    \(-1\). <i>This is the reason the binary targets for an SVM are encoded as 
+    \(\{+1, -1\}\), instead of \(\{0, 1\}\) or some other encoding.</i>. The single 
+    constraint, which holds for both positive and negative examples, is defined as:
+    $$y_i (w \cdot x_i + b) \ge 1$$.
+  </p>
+
+  <p>
+    Since the SVM learns a maximum-margin, we must find an expression for the width 
+    of the margin. From the figure, we see that the width can be computed using the 
+    following:
+    $$(x_+ - x_-) \cdot \frac{w}{||w||}$$
+    It should be noted that \(x_+\) and \(x_-\) in the above expression are support 
+    vectors. Support vectors are those vectors which lie exactly on the margin 
+    (i.e. \(y_i (w \cdot x + b) -  1 = 0\)). These vectors fully define the hyperplane. 
+    We will denote the set of support vectors for a given SVM as \(P\). Using this 
+    definition of support vectors, simple algebra yields the following expression for 
+    the margin width:
+    $$\frac{2}{||w||}$$
+  </p>
+
+  <p>
+    Since we want to maximise the margin, we need to solve the following optimisation 
+    problem:
+    $$\max_{w, b} \frac{2}{||w||}$$
+    subject to 
+    $$y_i (w \cdot x_i + b) \ge 1$$
+    This is mathematically equivalent to the following:
+    $$\min_{w, b} \frac{1}{2} ||w||^2$$
+    subject to 
+    $$y_i (w \cdot x_i + b) \ge 1$$
+  </p>
+
+  <p>
+    This optimisation problem is the perfect candidate for Langrange multipliers, and is 
+    is known as the <b>primal</b> formulation of the SVM. We formulate the Lagrangian:
+    $$\mathcal{L}(w, b) = \frac{1}{2} ||w||^2 - \sum_i \alpha_i [y_i (w \cdot x_i + b) - 1]$$
+    Taking the derivative with respect to the hyperplane slope \(w\), we yield:
+    $$\frac{\partial \mathcal{L}}{\partial w} = w - \sum_i \alpha_i y_i x_i = 0$$
+    Solving for \(w\) yields: \(w = \sum_i \alpha_i y_i x_i\). The equivalent equation 
+    for the intercept parameter \(b\) is: \(\sum_i \alpha_i y_i = 0\).
+  </p>
+
+  <p>
+    We can stop here and solve for the parameters. However, it is useful to convert the 
+    above primal formulation into its <i>dual</i> counterpart. This is because sometimes 
+    it is more efficient to solve the one than the other. Formally, we are solving for 
+    \(d\) parameters in the primal, and \(N\) in the dual. Thus, typically if \(N << d\), 
+    it is generally more efficient to solve the dual than the primal.
+  </p>
+
+  <p>
+    To construct the primal, we plug the equations obtained by taking the partial 
+    derivatives with respect to \(w\) and \(b\) back into the Lagrangian. The yields 
+    (after some algebra) the following:
+    $$\mathcal{L}(\alpha_i) = \sum_i \alpha_i - \frac{1}{2} \sum_i \sum_j \alpha_i \alpha_j y_i y_j x_i \cdot x_j$$
+    subject to 
+    $$\alpha_i \ge 0, \sum_i \alpha_i y_i = 0$$
+  </p>
+
+  <!-- HARD MARGIN -->
+  <h2>Hard-Margin</h2>
+  <p>
+    Recall that the dual formulation of the <b>hard-margin</b> SVM 
+    optimisation problem is given as: $$\min_{\alpha} \frac{1}{2} \sum_i \sum_j
+    y_i y_j \alpha_i \alpha_j x_i^T x_j - \sum_i \alpha_i$$ subject to
+    $$\alpha_i \ge 0, \sum_i y_i \alpha_i = 0 \text{ } \forall i$$
+  </p>
+
+  <p>
+    Then, to classify a novel example \(x_t\), we compute the following 
+    decision rule: $$f(x_t) = \text{sign}(\sum_i y_i \alpha_i x_i^T x_t)$$
+  </p>
+
+  <p>
+    It is clear from this decision rule that we require an \(\alpha_i\) for 
+    <b>every sample in the dataset</b>. However, in reality it is often the 
+    case that \(\alpha_i = 0\) for most samples in the dataset, except for a 
+    few points. The points where \(\alpha_i \neq 0\) are known as the 
+    <b>support vectors</b>. We will denote the set of support vectors for an 
+    SVM as \(P\).
+  </p>
+
+  <p>
+    <i>In this way, the support vectors completely define our decision 
+    boundary.</i> Futher, it is clear that we need a <i>minimum</i> of 2 
+    support vectors to compute the hyperplane for an SVM binary 
+    classification task. In general, we will need a minimum of the number 
+    of classes of support vectors to learn the maximum-margin hyperplanes.
+  </p>
+
+  <!-- SOFT MARGIN -->
+  <h2>Soft-Margin</h2>
+   <p>
+     The <b>soft-margin</b> SVM is a natural extension of the soft-margin 
+     variant. The main disadvantage of the hard-margin SVM is its strong 
+     assumption of perfect separation of the classes being possible. This is 
+     often not the case in practise. As such, soft-margin SVMs introduce so-called 
+     <i>slack variables</i>. The slack variables essentially allow the 
+     SVM some leeway in its where the data points must be relative to the margin
+     The amount of misclassification introduced with the slack variables is 
+     controlled through the use of a hyperparameter \(C \in \mathbb{R}\). This 
+     parameter can be interpreted as the effective number of misclassifications 
+     we permit the SVM to make. 
+   </p>
+
+   <p>
+     The dual formulation of the SVM is given by: $$$$
+    </p>
+
+  <!-- KERNEL TRICK -->
+  <h2>Kernel Trick</h2>
+
+  <!-- EXPERIMENTS -->
+  <h2>Experiments</h2>
+  http://www.robots.ox.ac.uk/~az/lectures/ml/lect3.pdf
+</dt-article>
 <dt-appendix>
 </dt-appendix>
 
