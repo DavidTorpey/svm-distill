@@ -26,15 +26,22 @@
   <p>
     Kernel methods are very useful pattern recognition algorithms, and still 
     see wide use in practise. The most popular kernel method is known as the 
-    support vector machine (SVM) <dt-cite key="svm"></dt-cite>.
+    support vector machine (SVM) <dt-cite key="svm"></dt-cite>. The SVM has 
+    many valuable properties. These include the fact the optimisation problem 
+    is convex for all viable kernel functions. Additionally, they are efficient 
+    at inference time, and often serve as a more stable alternative to logistic 
+    regression in certain cases. Lastly, they often have better generalisation 
+    performance than deep learning methods in data sparse problems, or very 
+    high dimensional structured problems.
   </p>
 
   <p>
-    The goal of an SVM, as with all classification algorithms, is to find a mapping \(f : \mathcal{X} \rightarrow
-    \mathcal{Y}\) using a training dataset \(S \subset \mathcal{X} \times \mathcal{Y}\), where \(S = X \times Y\) for
-    some \(X \subset \mathcal{X}\) and \(Y \subset \mathcal{Y}\). In this work, we will focus on a binary classification
-    context: \(\mathcal{Y} = \{+1, -1\}\), and a simple 2D real vector space as our feature space: \(\mathcal{X} =
-    \mathbb{R}^2\).
+    The goal of an SVM, as with all classification algorithms, is to find a 
+    mapping \(f : \mathcal{X} \rightarrow \mathcal{Y}\) using a training 
+    dataset \(S \subset \mathcal{X} \times \mathcal{Y}\). It should be noted 
+    that the typical formulation of the SVM (as discussed in this article) is 
+    only defined for binary classification. The typical methodologies chosen for 
+    multi-class extensions are the one-vs-one or one-vs-all paradigms.
   </p>
 
   <p>
@@ -47,8 +54,16 @@
   </p>
 
   <p>
-    The goal of the work is to develop an intuition about the various components of the SVM, when to use the various
-    flavours, and why they do or do not work.
+    The goal of the work is to develop an intuition about the various components 
+    of the SVM, when to use the various flavours, and why they do or do not work. 
+    The rest of the article is structured as follows. We first derive the primal 
+    optimisation problem for the hard-margin from a geometric perspective. We 
+    then derive the dual equivalent from the primal. Next, we extend this to the 
+    soft-margin case, followed by introducing the kernel trick. Lastly, we run 
+    a series of experiments to demonstrate the different components of the SVM, 
+    and show the affects they have when attempting to model the data. We provide 
+    explanations for each case. Finally, we conclude by summarising the 
+    intuition and foundation of the SVM as laid out in the article. 
   </p>
 
   <!-- GEOMETRIC DERIVATION -->
@@ -252,24 +267,35 @@
     The experimental setup is as follows. For demonstration purposes, only consider 
     binary classification, and feature vectors in 2D real vector space. Formally, 
     \(\mathcal{Y} = \{+1, -1\}\), and \(\mathcal{X} = \mathbb{R}^2\). Additionally, 
-    we only use synthetic, toy data that we generate to show the various concepts.
+    we only use synthetic, toy data that we generate to show the various concepts. 
+    We use the <i>scikit-learn</i> implementation of the SVM through the <i>SVC</i> 
+    API. Since this implementation only learns a soft-margin SVM, in order to simulate 
+    hard-margin SVMs, we simply set the parameter \(C\) to a very small positive value. 
+    Lastly, we define the proportion of the number of support vectors to number of data 
+    samples as:
+    $$\eta := \frac{|P|}{|S|} \in [\frac{|Y|}{|S|}, 1]$$
+    This serves as an important metric in our analyses. The above range for \(\eta\) 
+    holds for any generic finite set of classes \(\mathcal{Y}\). In our binary 
+    classification case, we have that \(\eta \in [\frac{2}{|S|}, 1]\).
   </p>
 
-  <p><img src="hm_linear.png"></p>
+  <p><img src="hm_linear_ls.png"></p>
 
-  <p>In the above image, we see that see that the 2 classes are well-separated, and are thus linearly separable.
-    Therefore, a hard-margin SVM can be easily learned for this dataset. Additionally, only 2 support vectors are needed
-    to define the decision boundary (depicted with yellow boundaries).</p>
+  <p>
+    In the above figure we run a hard-margin linear SVM on a dataset that is 
+    linearly separable. In such a setting, the hyperplane can be completely defined 
+    by only two support vectors (highlighted in yellow). In this case we have that:
+    $$\eta = $$
+  </p>
 
   <p><img src="hm_linear_lns.png"></p>
 
-  <p>
-    When the data are linearly nonseparable, a hard-margin linear SVM cannot find a hyperplane. This results in a poor
-    decision boundary, as depicted above. Further, in its attempt to find the hyperplane when the data is linearly
-    nonseparable, all points become support vectors: \(P = X\). This is a good indicator that something has gone wrong
-    during the optimisation of an SVM.
-  </p>
+  <p><img src="sm_linear_lns.png"></p>
 
+  <p><img src="hm_nonlinear_lns.png"></p>
+
+  <p><img src="sm_nonlinear_lns.png"></p>
+  
   http://www.robots.ox.ac.uk/~az/lectures/ml/lect3.pdf
 
   https://cel.archives-ouvertes.fr/cel-01003007/file/Lecture3_Linear_SVM_with_Slack.pdf
