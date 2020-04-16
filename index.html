@@ -207,8 +207,16 @@
     </p>
 
   <!-- KERNEL TRICK -->
-  <h2>Kernel Trick</h2>
-
+  <h2>The Kernel Trick</h2>
+  <p>
+    A kernel function is a function \(k : \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R}\). 
+    These are two main conditions for \(k\) to be a valid kernel for the SVM. Firstly, 
+    it should be a Mercer kernel. Interestingly, if \(k\) is not a Mercer kernel, the SVM 
+    optimisation problem is no longer convex. Secondly, the kernel should be able to be 
+    written as a feature map \(\phi : \mathcal{X} \rightarrow \mathcal{V}\) such that:
+    $$k(x_i, x_j) = \langle \phi(x_i), \phi(x_i) \rangle$$  
+  </p>
+  
   <!-- EXPERIMENTS -->
   <h2>Experiments</h2>
   http://www.robots.ox.ac.uk/~az/lectures/ml/lect3.pdf
