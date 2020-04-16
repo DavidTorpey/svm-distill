@@ -24,7 +24,7 @@
   <h2>Introduction</h2>
 
   <p>Kernel methods are very useful pattern recognition algorithms, and still see wide use in practise. The most popular
-    kernel method is known as the support vector machine (SVM).</p>
+    kernel method is known as the support vector machine (SVM) <dt-cite key="svm"></dt-cite>.</p>
 
   <p>The goal of an SVM, as with all classification algorithms, is to find a mapping \(f : \mathcal{X} \rightarrow
     \mathcal{Y}\) using a training dataset \(S \subset \mathcal{X} \times \mathcal{Y}\), where \(S = X \times Y\) for
@@ -42,8 +42,6 @@
   <p>The goal of the work is to develop an intuition about the various components of the SVM, when to use the various
     flavours, and why they do or do not work.</p>
 
-  <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
-
   <p><img src="hm_linear.png"></p>
 
   <p>In the above image, we see that see that the 2 classes are well-separated, and are thus linearly separable.
@@ -59,7 +57,9 @@
     during the optimisation of an SVM.
   </p>
 
-  <h2>The Support Vector Machine - A Geometric Derivation</h2>
+  <!-- GEOMETRIC DERIVATION -->
+  <h2>A Geometric Derivation</h2>
+  <p><img src="geom_1.png"></p>
   <p>
     The goal of an SVM is to construct a maximum-margin separating hyperplane 
     between the classes. To do this, consider a vector \(w\) that a perpendicular 
@@ -91,6 +91,8 @@
     constraint, which holds for both positive and negative examples, is defined as:
     $$y_i (w \cdot x_i + b) \ge 1$$.
   </p>
+
+  <p><img src="geom_2.png"></p>
 
   <p>
     Since the SVM learns a maximum-margin, we must find an expression for the width 
@@ -200,9 +202,10 @@
      not sufficient for the SVM to be able to model a variety of real-world 
      problems. The main disadvantage with the soft-margin formulation as 
      derived above is that it still assumes the data is linearly separable. It 
-     assumes a hyperplane (with some misclassification leeway) is sufficient. This 
-     assumption often does not hold, as most real-world data is non-linear. A technique, 
-     known as the <b>kernel trick</b> is a way of allowing the SVM is model linearly
+     assumes a hyperplane (with some misclassification leeway) is sufficient to 
+     separate the classes adequately. This assumption often does not hold, as 
+     most real-world data is non-linear. A technique, known as the 
+     <b>kernel trick</b> is a way of allowing the SVM is model linearly
      non-separable data, <i>with minimal changes to the optimisation problem</i>.
     </p>
 
@@ -227,11 +230,31 @@
 </dt-appendix>
 
 <script type="text/bibliography">
-  @article{gregor2015draw,
-    title={DRAW: A recurrent neural network for image generation},
-    author={Gregor, Karol and Danihelka, Ivo and Graves, Alex and Rezende, Danilo Jimenez and Wierstra, Daan},
-    journal={arXivreprint arXiv:1502.04623},
-    year={2015},
-    url={https://arxiv.org/pdf/1502.04623.pdf}
-  }
+  @inproceedings{representer,
+    author = {Sch\"{o}lkopf, Bernhard and Herbrich, Ralf and Smola, Alex J.},
+    title = {A Generalized Representer Theorem},
+    year = {2001},
+    isbn = {3540423435},
+    publisher = {Springer-Verlag},
+    address = {Berlin, Heidelberg},
+    booktitle = {Proceedings of the 14th Annual Conference on Computational Learning Theory and and 5th European Conference on Computational Learning Theory},
+    pages = {416–426},
+    numpages = {11},
+    series = {COLT ’01/EuroCOLT ’01}
+    }
+    @article{svm,
+      author = {Cortes, Corinna and Vapnik, Vladimir},
+      title = {Support-Vector Networks},
+      year = {1995},
+      issue_date = {September 1995},
+      publisher = {Kluwer Academic Publishers},
+      address = {USA},
+      volume = {20},
+      number = {3},
+      issn = {0885-6125},
+      journal = {Mach. Learn.},
+      month = sep,
+      pages = {273–297},
+      numpages = {25},
+      }      
 </script>
