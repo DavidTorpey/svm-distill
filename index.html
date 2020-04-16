@@ -23,38 +23,32 @@
   <!-- INTRODUCTION -->
   <h2>Introduction</h2>
 
-  <p>Kernel methods are very useful pattern recognition algorithms, and still see wide use in practise. The most popular
-    kernel method is known as the support vector machine (SVM) <dt-cite key="svm"></dt-cite>.</p>
+  <p>
+    Kernel methods are very useful pattern recognition algorithms, and still 
+    see wide use in practise. The most popular kernel method is known as the 
+    support vector machine (SVM) <dt-cite key="svm"></dt-cite>.
+  </p>
 
-  <p>The goal of an SVM, as with all classification algorithms, is to find a mapping \(f : \mathcal{X} \rightarrow
+  <p>
+    The goal of an SVM, as with all classification algorithms, is to find a mapping \(f : \mathcal{X} \rightarrow
     \mathcal{Y}\) using a training dataset \(S \subset \mathcal{X} \times \mathcal{Y}\), where \(S = X \times Y\) for
     some \(X \subset \mathcal{X}\) and \(Y \subset \mathcal{Y}\). In this work, we will focus on a binary classification
     context: \(\mathcal{Y} = \{+1, -1\}\), and a simple 2D real vector space as our feature space: \(\mathcal{X} =
-    \mathbb{R}^2\).</p>
+    \mathbb{R}^2\).
+  </p>
 
-  <p>The estimation of \(f\) using the SVM optimisation algorithm can be done in various ways. We will cover the
+  <p>
+    The estimation of \(f\) using the SVM optimisation algorithm can be done in various ways. We will cover the
     following concepts of the SVM framework: soft-margin, hard-margin, and the kernel trick. All of them, however, have
     the same overarching goal - compute an optimal separating hyperplane. Optimality of the hyperplane in the context of
     an SVM is that the hyperplane is defined to be the <b>maximum-margin</b> separating hyperplane. This makes intuitive
     sense, since a decision boundary that is far away from the classes as possible seems as if it would perform best in
-    terms of generalisation performance.</p>
-
-  <p>The goal of the work is to develop an intuition about the various components of the SVM, when to use the various
-    flavours, and why they do or do not work.</p>
-
-  <p><img src="hm_linear.png"></p>
-
-  <p>In the above image, we see that see that the 2 classes are well-separated, and are thus linearly separable.
-    Therefore, a hard-margin SVM can be easily learned for this dataset. Additionally, only 2 support vectors are needed
-    to define the decision boundary (depicted with yellow boundaries).</p>
-
-  <p><img src="hm_linear_lns.png"></p>
+    terms of generalisation performance.
+  </p>
 
   <p>
-    When the data are linearly nonseparable, a hard-margin linear SVM cannot find a hyperplane. This results in a poor
-    decision boundary, as depicted above. Further, in its attempt to find the hyperplane when the data is linearly
-    nonseparable, all points become support vectors: \(P = X\). This is a good indicator that something has gone wrong
-    during the optimisation of an SVM.
+    The goal of the work is to develop an intuition about the various components of the SVM, when to use the various
+    flavours, and why they do or do not work.
   </p>
 
   <!-- GEOMETRIC DERIVATION -->
@@ -244,6 +238,22 @@
   
   <!-- EXPERIMENTS -->
   <h2>Experiments</h2>
+
+  <p><img src="hm_linear.png"></p>
+
+  <p>In the above image, we see that see that the 2 classes are well-separated, and are thus linearly separable.
+    Therefore, a hard-margin SVM can be easily learned for this dataset. Additionally, only 2 support vectors are needed
+    to define the decision boundary (depicted with yellow boundaries).</p>
+
+  <p><img src="hm_linear_lns.png"></p>
+
+  <p>
+    When the data are linearly nonseparable, a hard-margin linear SVM cannot find a hyperplane. This results in a poor
+    decision boundary, as depicted above. Further, in its attempt to find the hyperplane when the data is linearly
+    nonseparable, all points become support vectors: \(P = X\). This is a good indicator that something has gone wrong
+    during the optimisation of an SVM.
+  </p>
+
   http://www.robots.ox.ac.uk/~az/lectures/ml/lect3.pdf
 
   https://cel.archives-ouvertes.fr/cel-01003007/file/Lecture3_Linear_SVM_with_Slack.pdf
