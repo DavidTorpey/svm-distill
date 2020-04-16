@@ -230,7 +230,16 @@
     This is where the kernel trick comes into play. We can replace these dot products with 
     the corresponding kernel values using \(k(x_i, x_j)\), since the kernel is defined
     (from above) to return exactly the dot product of a transformed version of the input 
-    vectors. The key is that this transformation is necessarily non-linear.
+    vectors. The key is that this transformation is necessarily non-linear. This is what 
+    equips the SVM with the ability to model non-linear data. The make the following 
+    small change to the objective function:
+    $$\frac{1}{2} \alpha_i \alpha_i y_i y_j k(x_i, x_j) - \sum_i \alpha_i$$
+    and the decision rule changes similarly to: \(f(x) = \sum_i \alpha_i y_i k(x_i, x)\). 
+    This means that the solution to the dual now depends on \(k(x_i, x_j)\) for all 
+    \(i, j\). This is known as the Gram (or kernel) matrix. However, this introduce a 
+    bottleneck. If \(n := |S|\) is too large, then it becomes infeasible to compute an 
+    \(n \times n\) Gram matrix. In such situations, it becomes more efficient to solve 
+    the primal.
   </p>
   
   <!-- EXPERIMENTS -->
