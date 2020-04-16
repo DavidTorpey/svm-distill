@@ -5,7 +5,7 @@
 </script>
 
 <script type="text/front-matter">
-  title: "An Intution for the Support Vector Machine"
+  title: "An Intuition for the Support Vector Machine"
   description: "Description of the post"
   authors:
   - David Torpey: https://davidtorpey.com
@@ -163,23 +163,26 @@
 
   <!-- SOFT MARGIN -->
   <h2>The Soft Margin</h2>
-   <p>
-     The <b>soft-margin</b> SVM is a natural extension of the soft-margin 
-     variant. The main disadvantage of the hard-margin SVM is its strong 
-     assumption of perfect separation of the classes being possible. This is 
-     often not the case in practise. As such, soft-margin SVMs introduce so-called 
-     <i>slack variables</i> to accommodate for this. The slack variables essentially 
-     allow the SVM some leeway in its where the data points must be relative to the 
-     margin. Formally, the primal formulation of the soft-margin variant of the SVM 
-     is given by:
-     $$\min_{w, b, \xi_i} \frac{1}{2} ||w||^2 + C \sum_i \xi_i$$
-     subject to 
-     $$y_i (w \cdot x_i + b) \ge 1 - \xi_i$$
-     where \(\xi_i\) are the slack variables, and \(C \in \mathbb{R}\). It is clear 
-     from the constraint how the leeway is introduced into the optimisation problem. 
-     The constraint is less stringent by allowing for a slack of \(\xi_i\) units for 
-     where point \(x_i\) lies with respect to the hyperplane.
-   </p>
+
+  <p><img src="geom3.png"></p>
+
+  <p>
+    The <b>soft-margin</b> SVM is a natural extension of the soft-margin 
+    variant. The main disadvantage of the hard-margin SVM is its strong 
+    assumption of perfect separation of the classes being possible. This is 
+    often not the case in practise. As such, soft-margin SVMs introduce so-called 
+    <i>slack variables</i> to accommodate for this. The slack variables essentially 
+    allow the SVM some leeway in its where the data points must be relative to the 
+    margin. Formally, the primal formulation of the soft-margin variant of the SVM 
+    is given by:
+    $$\min_{w, b, \xi_i} \frac{1}{2} ||w||^2 + C \sum_i \xi_i$$
+    subject to 
+    $$y_i (w \cdot x_i + b) \ge 1 - \xi_i$$
+    where \(\xi_i\) are the slack variables, and \(C \in \mathbb{R}\). It is clear 
+    from the constraint how the leeway is introduced into the optimisation problem. 
+    The constraint is less stringent by allowing for a slack of \(\xi_i\) units for 
+    where point \(x_i\) lies with respect to the hyperplane.
+  </p>
 
    <p>
      The dual equivalent within the soft-margin setting is given by:
