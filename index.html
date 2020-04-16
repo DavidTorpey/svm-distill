@@ -160,9 +160,9 @@
   <p>
     The above formulations of both the primal and dual are known as the <b>hard-margin</b> 
     SVM. This is important since the assumption being made is that the classes are 
-    linearly separable. This strong assumption of perfect separation often does not hold 
-    in practise, and there are ways of to accommodate for this. These will be discussed 
-    in the next section.
+    can be separated perfectly using a hyperplane. This strong assumption of perfect 
+    separation often does not hold in practise, and there are ways of to accommodate 
+    for this. These will be discussed in the next section.
   </p>
 
   <!-- SOFT MARGIN -->
@@ -195,7 +195,15 @@
    </p>
 
    <p>
-     The dual formulation of the SVM is given by: $$$$
+     Now that we have found a way to find a hyperplane, even when the classes 
+     are not perfectly separable, it seems we are done. However, this is still 
+     not sufficient for the SVM to be able to model a variety of real-world 
+     problems. The main disadvantage with the soft-margin formulation as 
+     derived above is that it still assumes the data is linearly separable. It 
+     assumes a hyperplane (with some misclassification leeway) is sufficient. This 
+     assumption often does not hold, as most real-world data is non-linear. A technique, 
+     known as the <b>kernel trick</b> is a way of allowing the SVM is model linearly
+     non-separable data, <i>with minimal changes to the optimisation problem</i>.
     </p>
 
   <!-- KERNEL TRICK -->
