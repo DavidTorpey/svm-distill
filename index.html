@@ -30,7 +30,7 @@
     many valuable properties. These include the fact the optimisation problem 
     is convex for all viable kernel functions. Additionally, they are efficient 
     at inference time, and often serve as a more stable alternative to logistic 
-    regression in certain cases. Lastly, they often have better generalisation 
+    regression for certain problems. Lastly, they often have better generalisation 
     performance than deep learning methods in data sparse problems, or very 
     high dimensional structured problems.
   </p>
@@ -39,18 +39,21 @@
     The goal of an SVM, as with all classification algorithms, is to find a 
     mapping \(f : \mathcal{X} \rightarrow \mathcal{Y}\) using a training 
     dataset \(S \subset \mathcal{X} \times \mathcal{Y}\). It should be noted 
-    that the typical formulation of the SVM (as discussed in this article) is 
+    that the vanilla formulation of the SVM (as discussed in this article) is 
     only defined for binary classification. The typical methodologies chosen for 
     multi-class extensions are the one-vs-one or one-vs-all paradigms.
   </p>
 
   <p>
-    The estimation of \(f\) using the SVM optimisation algorithm can be done in various ways. We will cover the
-    following concepts of the SVM framework: soft-margin, hard-margin, and the kernel trick. All of them, however, have
-    the same overarching goal - compute an optimal separating hyperplane. Optimality of the hyperplane in the context of
-    an SVM is that the hyperplane is defined to be the <b>maximum-margin</b> separating hyperplane. This makes intuitive
-    sense, since a decision boundary that is far away from the classes as possible seems as if it would perform best in
-    terms of generalisation performance.
+    The estimation of \(f\) using the SVM optimisation algorithm can be done in 
+    various ways. We will cover the following concepts of the SVM framework: 
+    soft-margin, hard-margin, and the kernel trick. All of them, however, have
+    the same overarching goal - compute an optimal separating hyperplane. 
+    Optimality of the hyperplane in the context of an SVM is that the hyperplane 
+    is defined to be the <b>maximum-margin</b> separating hyperplane. This makes 
+    intuitive sense, since a decision boundary that is far away from the classes 
+    as possible seems as if it would perform best in terms of generalisation 
+    performance.
   </p>
 
   <p>
@@ -58,7 +61,7 @@
     of the SVM, when to use the various flavours, and why they do or do not work. 
     The rest of the article is structured as follows. We first derive the primal 
     optimisation problem for the hard-margin from a geometric perspective. We 
-    then derive the dual equivalent from the primal. Next, we extend this to the 
+    then derive the dual equivalent using the primal. Next, we extend this to the 
     soft-margin case, followed by introducing the kernel trick. Lastly, we run 
     a series of experiments to demonstrate the different components of the SVM, 
     and show the affects they have when attempting to model the data. We provide 
