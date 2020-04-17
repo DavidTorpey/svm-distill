@@ -24,7 +24,7 @@
   <h2>Introduction</h2>
 
   <p>
-    Kernel methods are very useful pattern recognition algorithms, and still 
+    Kernel methods <dt-cite key="kmbook"></dt-cite> are very useful pattern recognition algorithms, and still 
     see wide use in practise. The most popular kernel method is known as the 
     support vector machine (SVM) <dt-cite key="svm"></dt-cite>. The SVM has 
     many valuable properties. These include the fact the optimisation problem 
@@ -57,8 +57,14 @@
   </p>
 
   <p>
-    The goal of the work is to develop an intuition about the various components 
+    The goal of this article is to develop an intuition about the various components 
     of the SVM, when to use the various flavours, and why they do or do not work. 
+    Most articles out there explaining the SVM 
+    <dt-cite key="svr"></dt-cite> <dt-cite key="erroranalysis"></dt-cite> 
+    <dt-cite key="svmtut"></dt-cite>
+    , while extremely useful and important 
+    parts of the kernel method literature, are not very approachable for beginners, 
+    and do not explain the SVM in an intuitive way. 
     The rest of the article is structured as follows. We first derive the primal 
     optimisation problem for the hard-margin from a geometric perspective. We 
     then derive the dual equivalent using the primal. Next, we extend this to the 
@@ -71,6 +77,15 @@
 
   <!-- GEOMETRIC DERIVATION -->
   <h2>A Geometric Derivation</h2>
+  <p>
+    In this section we will provide a derivation of the hard-margin SVM from a 
+    visual, geometric perspective. This derivation is partially inspired by 
+    <dt-cite key="svmlect"></dt-cite>. The goal of this derivation is to build 
+    up the concept of the SVM from basic principles. This will serve as an 
+    adequate platform to build upon, for when we delve into the more detailed 
+    and complicated components of the SVM.
+  </p>
+
   <p><img src="geom_1.png"></p>
   <p>
     The goal of an SVM is to construct a maximum-margin separating hyperplane 
@@ -134,7 +149,7 @@
 
   <p>
     This optimisation problem is the perfect candidate for Langrange multipliers, and is 
-    is known as the <b>primal</b> formulation of the SVM. It is a classic quadratic programming
+    known as the <b>primal</b> formulation of the SVM. It is a classic quadratic programming
     problem. The classification rule for the primal is \(f(\mathbf{x}) = \text{sign}(\mathbf{w} \cdot \mathbf{x} + b)\).
     We formulate the Lagrangian:
     $$\mathcal{L}(\mathbf{w}, b) = \frac{1}{2} ||\mathbf{w}||^2 - \sum_i \alpha_i [y_i (\mathbf{w} \cdot \mathbf{x}_i + b) - 1]$$
@@ -446,20 +461,78 @@
     pages = {416–426},
     numpages = {11},
     series = {COLT ’01/EuroCOLT ’01}
-    }
-    @article{svm,
-      author = {Cortes, Corinna and Vapnik, Vladimir},
-      title = {Support-Vector Networks},
-      year = {1995},
-      issue_date = {September 1995},
-      publisher = {Kluwer Academic Publishers},
-      address = {USA},
-      volume = {20},
-      number = {3},
-      issn = {0885-6125},
-      journal = {Mach. Learn.},
-      month = sep,
-      pages = {273–297},
-      numpages = {25},
-      }      
+  }
+  @article{svm,
+    author = {Cortes, Corinna and Vapnik, Vladimir},
+    title = {Support-Vector Networks},
+    year = {1995},
+    issue_date = {September 1995},
+    publisher = {Kluwer Academic Publishers},
+    address = {USA},
+    volume = {20},
+    number = {3},
+    issn = {0885-6125},
+    journal = {Mach. Learn.},
+    month = sep,
+    pages = {273–297},
+    numpages = {25},
+  }
+  @article{svr,
+    author = {Smola, Alex J. and Sch\"{o}lkopf, Bernhard},
+    title = {A Tutorial on Support Vector Regression},
+    year = {2004},
+    issue_date = {August 2004},
+    publisher = {Kluwer Academic Publishers},
+    address = {USA},
+    volume = {14},
+    number = {3},
+    issn = {0960-3174},
+    journal = {Statistics and Computing},
+    month = aug,
+    pages = {199–222},
+    numpages = {24},
+  }
+  @inproceedings{svmlect,
+    author = {Winston, P},
+    title = {6.034 Artificial Intelligence},
+    year = {2010},
+    publisher = {MIT OpenCourseWare},
+    url={https://ocw.mit.edu}
+  }
+  @article{erroranalysis,
+    author = {Chen, Di-Rong and Wu, Qiang and Ying, Yiming and Zhou, Ding-Xuan},
+    title = {Support Vector Machine Soft Margin Classifiers: Error Analysis},
+    year = {2004},
+    issue_date = {December 2004},
+    publisher = {JMLR.org},
+    volume = {5},
+    issn = {1532-4435},
+    journal = {J. Mach. Learn. Res.},
+    month = dec,
+    pages = {1143–1175},
+    numpages = {33}
+  }
+  @article{svmtut,
+    author = {Burges, Christopher J. C.},
+    title = {A Tutorial on Support Vector Machines for Pattern Recognition},
+    year = {1998},
+    issue_date = {June 1998},
+    publisher = {Kluwer Academic Publishers},
+    address = {USA},
+    volume = {2},
+    number = {2},
+    issn = {1384-5810},
+    journal = {Data Min. Knowl. Discov.},
+    month = jun,
+    pages = {121–167},
+    numpages = {47},
+  }
+  @book{kmbook,
+    author = {Shawe-Taylor, John and Cristianini, Nello},
+    title = {Kernel Methods for Pattern Analysis},
+    year = {2004},
+    isbn = {0521813972},
+    publisher = {Cambridge University Press},
+    address = {USA}
+  }
 </script>
