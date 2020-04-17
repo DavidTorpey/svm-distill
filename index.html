@@ -293,6 +293,8 @@
     why they occur, and how to mitigate them.
   </p>
 
+  <h3>Experimental Setup</h3>
+
   <p>
     The experimental setup is as follows. For demonstration purposes, only consider 
     binary classification, and feature vectors in 2D real vector space. Formally, 
@@ -310,6 +312,9 @@
     lower \(\eta\) is, the better generalisation performance will be. Of course there 
     are cases where this does not hold, but it is a good rule-of-thumb.
   </p>
+
+
+  <h3>Results</h3>
 
   <p><img src="hm_linear_ls.png"></p>
 
@@ -370,6 +375,56 @@
     which had \(\eta = 0.8\). This is good empirical evidence that the data is non-linear, 
     since it is best modelled using a non-linear SVM. It also suggests that this kernelized 
     SVM will have better generalisation performance.
+  </p>
+
+  <p><img src="eta_vs_acc.png"></p>
+
+  <p>
+    The above figure is the result of running an RBF SVM for random synthetic classification 
+    datasets for 20 trials each and averaging. It clearly shows the relationship between 
+    \(\eta\) and test accuracy (which we use as a proxy for generalisation performance). There 
+    is a clear downward trend as \(\eta\) grows. That is, as the proportion of support vectors 
+    needed to define the hyperplane increases, test accuracy generally decreases.
+  </p>
+
+  <p>
+    Next we visualise the effect of the a kernel in assisting the SVM in being 
+    able to find a hyperplane. Consider a simple 1D dataset as seen below. This 
+    dataset consists of two classes, which are clearly not linearly separable. 
+    As such, there exists no hyperplane with can reliably discriminate between the 
+    two classes. Now, consider the definition of a polynomial kernel function"
+    $$K(x, z) = (x^T z + c)^d$$
+    where \(c \in \mathbb{R}\) is the intercept and \(d \in \mathbb{Z}\) is the 
+    degree of the polynomial kernel. For simplicity, we choose \(c = 0\) and 
+    \(d = 2\), which corresponds to a quadratic mapping. In order to visualise the 
+    kernel, we will need to plot the data once transformed using the kernel's 
+    corresponding feature map \(\phi\). Note again that when learning an SVM, 
+    we would never need to actually represent the data points in this transformed 
+    feature space, since the kernel explicitly returns the dot products, which is 
+    all we need. 
+  </p>
+
+  <p><img src="1d.png"></p>
+
+  <p>
+    The our chosen quadratic kernel, our corresponding feature map is defined as:
+    $$\phi(x) = x^2$$
+    This can be easily verified. It is interesting to note that, in this case, the 
+    dimensionality of the transformed feature space is the same as that of the raw 
+    feature space. This is because we set \(c=0\). This is typically not the case, and 
+    indeed when using the RBF kernel, the feature space is infinite dimensional.
+  </p>
+
+  <p><img src="1d_kernel.png"></p>
+
+  <p>
+    In the above figure we see the transformed feature space using the quadratic 
+    kernel. It is clear this transformation has helped, as the two classes are 
+    now linearly separable. We can now indeed find a hyperplane that can reliably 
+    discriminate between the two classes. It should be noted that this example was 
+    chosen carefully for the purposes of demonstrations, and feature transformations 
+    using kernels does not always work out so perfectly. Choosing a kernel for a 
+    particular problem is an important part of using SVMs for pattern recognition.
   </p>
 
   http://www.robots.ox.ac.uk/~az/lectures/ml/lect3.pdf
