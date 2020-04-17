@@ -346,7 +346,7 @@
     the soft-margin variant. This will allow some leeway for misclassification 
     in the effort of finding a sane and reliable hyperplane. From visual inspection, 
     the hyperplane found seems to fit the data better, given its distribution. Further, 
-    (\eta\) has decreased to \(0.8\), which means fewer data points are used as support 
+    \(\eta\) has decreased to \(0.8\), which means fewer data points are used as support 
     vectors to define the hyperplane. This is promising, however, this is still a 
     very high value for \(\eta\). 
   </p>
@@ -393,7 +393,7 @@
     dataset consists of two classes, which are clearly not linearly separable. 
     As such, there exists no hyperplane with can reliably discriminate between the 
     two classes. Now, consider the definition of a polynomial kernel function"
-    $$K(x, z) = (x^T z + c)^d$$
+    $$K(\mathbf{x}, \mathbf{z}) = (\mathbf{x}^T \mathbf{z} + c)^d$$
     where \(c \in \mathbb{R}\) is the intercept and \(d \in \mathbb{Z}\) is the 
     degree of the polynomial kernel. For simplicity, we choose \(c = 0\) and 
     \(d = 2\), which corresponds to a quadratic mapping. In order to visualise the 
@@ -407,8 +407,8 @@
   <p><img src="1d.png"></p>
 
   <p>
-    The our chosen quadratic kernel, our corresponding feature map is defined as:
-    $$\phi(x) = x^2$$
+    For our chosen quadratic kernel, the corresponding feature map is defined as:
+    $$\phi(\mathbf{x}) = \mathbf{x}^2$$
     This can be easily verified. It is interesting to note that, in this case, the 
     dimensionality of the transformed feature space is the same as that of the raw 
     feature space. This is because we set \(c=0\). This is typically not the case, and 
