@@ -87,9 +87,10 @@
   </p>
 
   <p><img src="geom_1.png"></p>
+
   <p>
     The goal of an SVM is to construct a maximum-margin separating hyperplane 
-    between the classes. To do this, consider a vector \(w\) that a perpendicular 
+    between the classes. To do this, consider a vector \(w\) that is perpendicular 
     to the margin, and a novel point \(\mathbf{x}\), which is the data point we want to 
     classify. First, we project \(\mathbf{x}\) onto \(\mathbf{w}\): \(\mathbf{w} \cdot \mathbf{x}\). 
     Since \(\mathbf{w}\) is normal to the hyperplane, this projection is also normal to it. 
@@ -169,7 +170,7 @@
 
   <p>
     To construct the dual, we plug the equations obtained by taking the partial 
-    derivatives with respect to \(\mathbf{w}\) and \(b\) back into the Lagrangian. The yields 
+    derivatives with respect to \(\mathbf{w}\) and \(b\) back into the Lagrangian. This yields 
     (after some algebra) the following:
     $$\mathcal{L}(\alpha_i) = \sum_i \alpha_i - \frac{1}{2} \sum_i \sum_j \alpha_i \alpha_j y_i y_j \mathbf{x}_i \cdot \mathbf{x}_j$$
     subject to 
@@ -182,7 +183,7 @@
     the ratio \(\frac{|P|}{|S|}\), the better the generalisation performance. In other words, 
     the fewer support vectors with respect to the number of samples in the training set, 
     the better. This makes intuitive sense, since if the SVM can construct a hyperplane 
-    with few samples, it is confident about the class labels about the majority of the 
+    with few samples, it is confident about the class labels for the majority of the 
     training examples.
   </p>
 
@@ -190,7 +191,7 @@
     The above formulations of both the primal and dual are known as the <b>hard-margin</b> 
     SVM. This is important since the assumption being made is that the classes   
     can be separated perfectly using a hyperplane. This strong assumption of perfect 
-    separation often does not hold in practise, and there are ways of to accommodate 
+    separation often does not hold in practise, and there are ways to accommodate 
     for this. These will be discussed in the next section.
   </p>
 
@@ -205,7 +206,7 @@
     assumption of perfect separation of the classes being possible. This is 
     often not the case in practise. As such, soft-margin SVMs introduce so-called 
     <i>slack variables</i> to accommodate for this. The slack variables essentially 
-    allow the SVM some leeway in its where the data points must be relative to the 
+    allow the SVM some leeway in where the data points must lie relative to the 
     margin. Formally, the primal formulation of the soft-margin variant of the SVM 
     is given by:
     $$\min_{\mathbf{w}, b, \xi_i} \frac{1}{2} ||\mathbf{w}||^2 + C \sum_i \xi_i$$
@@ -237,7 +238,7 @@
      It assumes a hyperplane (with some misclassification leeway) is sufficient to 
      separate the classes adequately. This assumption often does not hold, as 
      most real-world data is non-linear. A technique, known as the 
-     <b>kernel trick</b> is a way of allowing the SVM is model linearly
+     <b>kernel trick</b>, is a way of allowing the SVM is model linearly
      non-separable data, <i>with minimal changes to the optimisation problem</i>.
     </p>
 
@@ -253,9 +254,9 @@
   </p>
 
   <p>
-    Now, recall the (without loss of generality) the objective function for the 
+    Now, recall (without loss of generality) the objective function for the 
     dual formulation for a soft-margin linear SVM:
-    $$\frac{1}{2} \alpha_i \alpha_i y_i y_j \mathbf{x}_i \cdot \mathbf{x}_j - \sum_i \alpha_i$$
+    $$\frac{1}{2} \sum_i \alpha_i \alpha_i y_i y_j \mathbf{x}_i \cdot \mathbf{x}_j - \sum_i \alpha_i$$
     Note that the first term of this objective function - and thus the whole optimisation 
     problem for the SVM, depends <b>only</b> on dot products between the input vectors. 
     This is where the kernel trick comes into play. We can replace these dot products with 
@@ -296,7 +297,7 @@
     where \(\beta_i \in \mathbb{R}\). This is the same form as the decision rule 
     given above with \(\beta_i = \alpha_i y_i\). The theorem basically shows 
     that the slope of the hyperplane being learned can be completely described as 
-    a linear combination over of the input data samples \(\mathbf{x}_i\).
+    a linear combination over the input data samples \(\mathbf{x}_i\).
   </p>
 
   <!-- EXPERIMENTS -->
@@ -318,8 +319,8 @@
     We use the <i>scikit-learn</i> implementation of the SVM through the <i>SVC</i> 
     API. Since this implementation only learns a soft-margin SVM, in order to simulate 
     hard-margin SVMs, we simply set the parameter \(C\) to a very small positive value. 
-    Lastly, we define the proportion of the number of support vectors to number of data 
-    samples as:
+    Lastly, we define the proportion of the number of support vectors to the number 
+    of data samples as:
     $$\eta := \frac{|P|}{|S|} \in [\frac{|Y|}{|S|}, 1]$$
     This serves as an important metric in our analyses. The above range for \(\eta\) 
     holds for any generic finite set of classes \(\mathcal{Y}\). In our binary 
